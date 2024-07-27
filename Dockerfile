@@ -9,7 +9,7 @@ RUN apt-get update && \
 RUN pip install pip==20.3.4
 
 # Install required Python packages
-RUN pip install web.py boto3 pynacl python-jose ofxhome lxml 'keyring==18.0.1'
+RUN pip install web.py boto3 pynacl python-jose ofxhome lxml beautifulsoup4 'keyring==18.0.1'
 
 # Clone and install ofxclient
 RUN git clone https://github.com/captin411/ofxclient.git && \
