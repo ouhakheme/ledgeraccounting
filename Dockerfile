@@ -5,8 +5,8 @@ RUN apt-get update && \
     apt-get install -y python libgmp10 python-pip git gcc autoconf automake libcap-dev pkg-config libssl-dev vim ledger && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Upgrade pip
-RUN pip install --upgrade pip
+# Install a specific version of pip that is compatible with Python 2
+RUN pip install pip==20.3.4
 
 # Install required Python packages
 RUN pip install web.py boto3 pynacl python-jose ofxhome lxml 'keyring==18.0.1'
