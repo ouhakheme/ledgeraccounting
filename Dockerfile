@@ -9,7 +9,7 @@ RUN apt-get update && \
 RUN pip install pip==20.3.4
 
 # Install required Python packages
-RUN pip install web.py boto3 pynacl python-jose ofxhome lxml beautifulsoup4 'keyring==18.0.1'
+RUN pip install web.py boto3 pynacl 'python-jose==2.0.2' ofxhome lxml beautifulsoup4 'keyring==18.0.1'
 
 # Install ofxparse
 RUN pip install ofxparse==0.19
