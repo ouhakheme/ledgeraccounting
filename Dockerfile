@@ -1,21 +1,26 @@
 FROM ubuntu:16.04
 
-RUN apt-get update
-RUN apt-get install -y python
-RUN apt-get install -y libgmp10
-RUN apt-get install -y python-pip git gcc autoconf automake libcap-dev
-RUN apt-get install -y pkg-config libssl-dev
+# Update and install necessary packages
+RUN apt-get update && \
+    apt-get install -y python libgmp10 python-pip git gcc autoconf automake libcap-dev pkg-config libssl-dev vim ledger && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /root
-
-RUN apt-get install -y vim ledger
+# Upgrade pip
 RUN pip install --upgrade pip
 
-RUN pip install web.py boto3 pynacl python-jose ofxhome lxml
-RUN pip install 'keyring==18.0.1'
-RUN git clone https://github.com/captin411/ofxclient.git
-RUN cd ofxclient && python setup.py install
+# Install required Python packages
+RUN pip install web.py boto3 pynacl python-jose ofxhome lxml 'keyring==18.0.1'
+
+# Clone and install ofxclient
+RUN git clone https://github.com/captin411/ofxclient.git && \
+    cd ofxclient && python setup.py install && cd .. && rm -rf ofxclient
+
+# Add application files
 ADD . /root/ledgereditor/
 WORKDIR /root/ledgereditor
+
+# Expose port
 EXPOSE 8888
-ENTRYPOINT /usr/bin/python serve_ledger.py
+
+# Set entrypoint
+ENTRYPOINT ["/usr/bin/python", "serve_ledger.py"]
